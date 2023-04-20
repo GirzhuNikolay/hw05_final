@@ -1,8 +1,10 @@
-from django.contrib.auth import get_user_model
-from django.test import TestCase, Client
-from posts.models import Group, Post
 from http import HTTPStatus
+
+from posts.models import Group, Post
+from django.test import TestCase, Client
+from django.contrib.auth import get_user_model
 from django.core.cache import cache
+
 
 User = get_user_model()
 

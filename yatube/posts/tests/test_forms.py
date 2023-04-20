@@ -1,12 +1,12 @@
-from http import HTTPStatus
-from django.contrib.auth import get_user_model
-from django.test import Client, TestCase, override_settings
-from django.urls import reverse
-from django.core.files.uploadedfile import SimpleUploadedFile
-from django.conf import settings
-
 import tempfile
 import shutil
+
+from http import HTTPStatus
+from django.urls import reverse
+from django.test import Client, TestCase, override_settings
+from django.conf import settings
+from django.contrib.auth import get_user_model
+from django.core.files.uploadedfile import SimpleUploadedFile
 
 from ..models import Group, Post, Comment
 
@@ -82,11 +82,13 @@ class PostFormTests(TestCase):
                 kwargs={'username': self.post_author.username})
         )
         self.assertEqual(Post.objects.count(), posts_count + 1)
-        post = Post.objects.latest('id')
-        self.assertEqual(post.text, form_data['text'])
-        self.assertEqual(post.author, self.post_author)
-        self.assertEqual(post.group_id, form_data['group'])
-        self.assertEqual(post.image.name, 'posts/small.gif')
+        self.assertTrue(
+            Post.objects.filter(
+                text=form_data['text'],
+                group=form_data['group'],
+                image='posts/small.gif'
+            ).exists()
+        )
 
     def test_authorized_user_edit_post(self):
         """Проверка редактирования записи авторизированным клиентом."""

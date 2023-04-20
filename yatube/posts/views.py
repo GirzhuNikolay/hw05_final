@@ -13,7 +13,7 @@ number_output_records = 10
 
 @cache_page(20)
 def index(request):
-    post_list = Post.objects.all().order_by('-pub_date')
+    post_list = Post.objects.select_related('author', 'group')
     paginator = Paginator(post_list, number_output_records)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)

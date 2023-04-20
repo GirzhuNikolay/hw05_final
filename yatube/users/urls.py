@@ -1,4 +1,5 @@
 # Импортируем из приложения django.contrib.auth нужный view-класс
+from django.urls import path
 from django.contrib.auth.views import (LoginView, LogoutView,
                                        PasswordChangeDoneView,
                                        PasswordChangeView,
@@ -6,7 +7,6 @@ from django.contrib.auth.views import (LoginView, LogoutView,
                                        PasswordResetConfirmView,
                                        PasswordResetDoneView,
                                        PasswordResetView)
-from django.urls import path
 
 from . import views
 
