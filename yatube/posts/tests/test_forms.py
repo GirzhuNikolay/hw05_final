@@ -1,7 +1,7 @@
 import tempfile
 import shutil
-
 from http import HTTPStatus
+
 from django.urls import reverse
 from django.test import Client, TestCase, override_settings
 from django.conf import settings
@@ -82,13 +82,11 @@ class PostFormTests(TestCase):
                 kwargs={'username': self.post_author.username})
         )
         self.assertEqual(Post.objects.count(), posts_count + 1)
-        self.assertTrue(
-            Post.objects.filter(
-                text=form_data['text'],
-                group=form_data['group'],
-                image='posts/small.gif'
-            ).exists()
-        )
+        post = Post.objects.latest('id')
+        self.assertEqual(post.text, form_data['text'])
+        self.assertEqual(post.author, self.post_author)
+        self.assertEqual(post.group_id, form_data['group'])
+        self.assertEqual(post.image, 'posts/small.gif')
 
     def test_authorized_user_edit_post(self):
         """Проверка редактирования записи авторизированным клиентом."""
