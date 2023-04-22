@@ -86,7 +86,7 @@ class PostFormTests(TestCase):
         self.assertEqual(post.text, form_data['text'])
         self.assertEqual(post.author, self.post_author)
         self.assertEqual(post.group_id, form_data['group'])
-        self.assertEqual(post.image, 'posts/small.gif')
+        self.assertEqual(post.image, f'posts/{form_data["image"].name}')
 
     def test_authorized_user_edit_post(self):
         """Проверка редактирования записи авторизированным клиентом."""
